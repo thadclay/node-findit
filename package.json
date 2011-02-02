@@ -1,7 +1,7 @@
 {
     "name" : "findit",
     "version" : "0.0.1",
-    "description" : "Walk a directory tree synchronously or with an EventEmitter",
+    "description" : "Walk a directory tree.",
     "main" : "./index.js",
     "dependencies" : {
         "seq" : ">=0.1.7"
