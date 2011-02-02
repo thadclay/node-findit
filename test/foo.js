@@ -8,9 +8,14 @@ exports.foo = function () {
         assert.fail('Never caught "end"');
     }, 5000);
     
-    var paths = {};
+    var ps = {};
     var finder = find(__dirname + '/foo', function (file, stat) {
-        paths[file] = stat.isDirectory();
+        ps[file] = stat.isDirectory();
+    });
+    
+    var paths = []
+    finder.on('path', function (p) {
+        paths.push(p);
     });
     
     var dirs = []
@@ -35,12 +40,12 @@ exports.foo = function () {
             'a/b/c/w' : false,
         };
         
-        assert.eql(Object.keys(ref).length, Object.keys(paths).length);
-        var count = { dirs : 0, files : 0 };
+        assert.eql(Object.keys(ref).length, Object.keys(ps).length);
+        var count = { dirs : 0, files : 0, paths : 0 };
         
         Object.keys(ref).forEach(function (key) {
             var file = __dirname + '/foo/' + key;
-            assert.eql(ref[key], paths[file]);
+            assert.eql(ref[key], ps[file]);
             if (ref[key]) {
                 assert.ok(dirs.indexOf(file) >= 0);
                 count.dirs ++;
@@ -53,5 +58,6 @@ exports.foo = function () {
         
         assert.eql(count.dirs, dirs.length);
         assert.eql(count.files, files.length);
+        assert.eql(paths.sort(), Object.keys(ps).sort());
     });
 };

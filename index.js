@@ -20,6 +20,7 @@ exports.find = function (base, cb) {
             .seqEach(function (file) {
                 var stat = this.vars[file];
                 if (cb) cb(file, stat);
+                em.emit('path', file, stat);
                 
                 if (stat.isDirectory()) {
                     em.emit('directory', file, stat);
