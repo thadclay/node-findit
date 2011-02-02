@@ -62,7 +62,6 @@ exports.foo = function () {
 };
 
 exports.fooSync = function () {
-    
     assert.eql(
         findSync(__dirname + '/foo')
             .reduce(function (files, file) {
