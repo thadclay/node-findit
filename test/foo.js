@@ -1,7 +1,6 @@
 var assert = require('assert');
 var find = require('findit').find;
 var findSync = require('findit').findSync;
-var Hash = require('traverse/hash');
 
 exports.foo = function () {
     var to = setTimeout(function () {
@@ -60,4 +59,20 @@ exports.foo = function () {
         assert.eql(count.files, files.length);
         assert.eql(paths.sort(), Object.keys(ps).sort());
     });
+};
+
+exports.fooSync = function () {
+    
+    assert.eql(
+        findSync(__dirname + '/foo')
+            .reduce(function (files, file) {
+                files[file] = true;
+                return files;
+            }, {}),
+        [ 'a', 'a/b', 'a/b/c', 'x', 'a/y', 'a/b/z', 'a/b/c/w' ]
+            .reduce(function (files, file) {
+                files[__dirname + '/foo/' + file] = true;
+                return files;
+            }, {})
+    );
 };
