@@ -44,14 +44,12 @@ exports.findSync = function findSync (dir) {
         .reduce(function (files, file) {
             var p = dir + '/' + file;
             var stat = fs.statSync(p);
+            files.push(p);
             
             if (stat.isDirectory()) {
                 files.push.apply(files, findSync(p));
             }
-            else {
-                files.push(p);
-            }
-
+            
             return files;
         }, [])
     ;
