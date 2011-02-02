@@ -2,7 +2,9 @@ var fs = require('fs');
 var EventEmitter = require('events').EventEmitter;
 var Seq = require('seq');
 
-exports.find = function (base, cb) {
+exports = module.exports = find;
+exports.find = find;
+function find (base, cb) {
     var em = new EventEmitter;
     
     (function find (dir, f) {
@@ -54,3 +56,5 @@ exports.findSync = function findSync (dir) {
         }, [])
     ;
 };
+
+exports.find.sync = exports.findSync;
