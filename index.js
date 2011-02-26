@@ -42,6 +42,8 @@ function find (base, cb) {
 };
 
 exports.findSync = function findSync (dir) {
+    if (!fs.statSync(dir).isDirectory()) return [dir];
+    
     return fs.readdirSync(dir)
         .reduce(function (files, file) {
             var p = dir + '/' + file;

@@ -74,4 +74,6 @@ exports.fooSync = function () {
                 return files;
             }, {})
     );
+    
+    assert.eql(findSync(__dirname + '/foo/x'), [ __dirname + '/foo/x' ]);
 };
